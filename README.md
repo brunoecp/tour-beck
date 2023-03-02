@@ -4,7 +4,7 @@
 
 - [Cadastro de viagem](#cadastro-de-viagens)
 - [Detalhes Viagem](#detalhes-viagem)
-- Apagar viagem
+- [Apagar viagem](#deletar-viagem)
 - Editar Viagem
 - Mostrar todas viagens
 
@@ -56,7 +56,7 @@
 
 **Exemplo de Resposta**
 
-````json
+````js
 {
     "destino": 'florianopolis',
     "agencia": 'Latam',
