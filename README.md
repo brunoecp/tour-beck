@@ -14,7 +14,7 @@
 
 **Exemplo de Entrada**
 
-````json
+````js
 {
     "id" : 1,
     "destino": 'florianopolis',
