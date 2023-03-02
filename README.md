@@ -3,7 +3,7 @@
 ## Endspoints
 
 - [Cadastro de viagem](#cadastro-de-viagens)
-- Detalhes Viagem
+- [Detalhes Viagem](#detalhes-viagem)
 - Apagar viagem
 - Editar Viagem
 - Mostrar todas viagens
@@ -16,6 +16,7 @@
 
 ````json
 {
+    "id" : 1,
     "destino": 'florianopolis',
     "agencia": 'Latam',
     "dia_ida": '2023-03-06',
@@ -49,3 +50,44 @@
 
 ---
 
+### Detalhes viagem
+
+`GET` tourbeck/api/v1/viagem/{id}
+
+**Exemplo de Resposta**
+
+````json
+{
+    "destino": 'florianopolis',
+    "agencia": 'Latam',
+    "dia_ida": '2023-03-06',
+    "dia_volta": '2023-03-13',
+    "categoria": 'Negocios',
+    "itens":{
+        "cueca": 5,
+        "guarda-chuva" : 1,
+        "calça": 3,
+        "camisa": 6
+    },
+    "Condições_Climaticas":{
+        "temperatura_atual": 21,
+        "temperatura_max":28,
+        "temperatura_min": 18,
+        "condicao": 'ensolarado'
+    }
+}
+````
+|código|descrição
+|-|-
+200 | A viagem foi retornada com sucesso
+404 | Viagem não encontrada
+
+---
+
+### Deletar Viagem
+`DELETE` tourbeck/api/v1/viagem/{id}
+
+|código|descrição
+|-|-
+200 | A viagem foi deletada com sucesso
+204 | A viagem não existe-
