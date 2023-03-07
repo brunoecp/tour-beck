@@ -5,7 +5,7 @@
 - [Cadastro de viagem](#cadastro-de-viagens)
 - [Detalhes Viagem](#detalhes-viagem)
 - [Apagar viagem](#deletar-viagem)
-- Editar Viagem
+- [Editar Viagem](#editar-viagem)
 - Mostrar todas viagens
 
 ### Cadastro de viagens
@@ -22,12 +22,14 @@
     "dia_ida": '2023-03-06',
     "dia_volta": '2023-03-13',
     "categoria": 'Negocios',
-    "itens":{
-        "cueca": 5,
-        "guarda-chuva" : 1,
-        "calça": 3,
-        "camisa": 6
-    }
+    "itens":[
+        {"nome": "shorts"
+        "quantidade": 3},
+        {"nome": "camisa"
+        "quantidade": 5},
+        {"nome": "calça"
+        "quantidade": 2}
+    ]
 }
 ````
 
@@ -63,12 +65,14 @@
     "dia_ida": '2023-03-06',
     "dia_volta": '2023-03-13',
     "categoria": 'Negocios',
-    "itens":{
-        "cueca": 5,
-        "guarda-chuva" : 1,
-        "calça": 3,
-        "camisa": 6
-    },
+    "itens":[
+        {"nome": "shorts"
+        "quantidade": 3},
+        {"nome": "camisa"
+        "quantidade": 5},
+        {"nome": "calça"
+        "quantidade": 2}
+    ],
     "Condições_Climaticas":{
         "temperatura_atual": 21,
         "temperatura_max":28,
@@ -84,10 +88,80 @@
 
 ---
 
+### Todas as viagens
+
+`GET` tourbeck/api/v1/viagem
+
+**Exemplo de Resposta**
+
+````js
+{
+    [
+    "destino": 'florianopolis',
+    "agencia": 'Latam',
+    "dia_ida": '2023-03-06',
+    "dia_volta": '2023-03-13',
+    "categoria": 'Negocios',
+    "itens":[
+        {"nome": "shorts"
+        "quantidade": 3},
+        {"nome": "camisa"
+        "quantidade": 5},
+        {"nome": "calça"
+        "quantidade": 2}
+    ],
+    "Condições_Climaticas":{
+        "temperatura_atual": 21,
+        "temperatura_max":28,
+        "temperatura_min": 18,
+        "condicao": 'ensolarado'
+        }
+    ]
+}
+````
+|código|descrição
+|-|-
+200 | As viagens foram retornada com sucesso
+404 | Viagem não encontrada
+---
+
 ### Deletar Viagem
 `DELETE` tourbeck/api/v1/viagem/{id}
 
 |código|descrição
 |-|-
 200 | A viagem foi deletada com sucesso
-204 | A viagem não existe-
+204 | A viagem não existe
+
+---
+
+### Editar Viagem
+`PUT` tourbeck/api/v1/viagem/{id}
+
+**Exemplo de Entrada**
+
+````js
+{
+    "id" : 1,
+    "destino": 'kyoto',
+    "agencia": 'avianca',
+    "dia_ida": '2023-03-09',
+    "dia_volta": '2023-03-18',
+    "categoria": 'diversao',
+    "itens":[
+        {"nome": "shorts"
+        "quantidade": 5},
+        {"nome": "camisa"
+        "quantidade": 10},
+        {"nome": "calça"
+        "quantidade": 1},
+        {"nome": "boia"
+        "quantidade": 1}
+    ]
+}
+````
+
+|código|descrição
+|-|-
+200 | A viagem foi modificada com sucesso
+204 | A viagem não existe
