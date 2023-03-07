@@ -6,7 +6,7 @@
 - [Detalhes Viagem](#detalhes-viagem)
 - [Apagar viagem](#deletar-viagem)
 - [Editar Viagem](#editar-viagem)
-- Mostrar todas viagens
+- [Mostrar todas viagens](#todas-as-viagens)
 
 ### Cadastro de viagens
 
