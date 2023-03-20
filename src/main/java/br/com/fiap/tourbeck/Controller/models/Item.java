@@ -3,9 +3,9 @@ package br.com.fiap.tourbeck.Controller.models;
 public class Item {
 
     private String nome;
-    private String quantidade;
+    private Integer quantidade;
     
-    public Item(String nome, String quantidade) {
+    public Item(String nome, Integer quantidade) {
         this.nome = nome;
         this.quantidade = quantidade;
     }
@@ -19,10 +19,12 @@ public class Item {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public String getQuantidade() {
+
+    public Integer getQuantidade() {
         return quantidade;
     }
-    public void setQuantidade(String quantidade) {
+
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -30,6 +32,5 @@ public class Item {
     public String toString() {
         return "Itens [nome=" + nome + ", quantidade=" + quantidade + "]";
     }
-
     
 }
