@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.tourbeck.Controller.models.Despesa;
 
 @RestController
-public class DespesasController {
+public class ExController {
     
 
     @GetMapping("/api/v1/despesas")
