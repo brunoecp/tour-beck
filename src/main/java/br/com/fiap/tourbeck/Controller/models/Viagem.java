@@ -1,5 +1,6 @@
 package br.com.fiap.tourbeck.Controller.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,21 +8,21 @@ public class Viagem {
     
     private String destino;
     private String agencia;
-    private Date Ida;
-    private Date Volta;
-    private List<Item> itens;
+    private String Ida;
+    private String Volta;
+    private ArrayList<Item> itens;
 
     public Viagem() {
     }
-
-    public Viagem(String destino, String agencia, Date ida, Date volta, List<Item> itens) {
+    
+    public Viagem(String destino, String agencia, String ida, String volta, ArrayList<Item> itens) {
         this.destino = destino;
         this.agencia = agencia;
         Ida = ida;
         Volta = volta;
         this.itens = itens;
     }
-    
+
     public String getDestino() {
         return destino;
     }
@@ -34,31 +35,29 @@ public class Viagem {
     public void setAgencia(String agencia) {
         this.agencia = agencia;
     }
-    public Date getIda() {
+
+
+    public String getIda() {
         return Ida;
     }
-    public void setIda(Date ida) {
+
+    public void setIda(String ida) {
         Ida = ida;
     }
-    public Date getVolta() {
+
+    public String getVolta() {
         return Volta;
     }
-    public void setVolta(Date volta) {
+
+    public void setVolta(String volta) {
         Volta = volta;
     }
-    public List<Item> getItens() {
-        return itens;
-    }
-    public void setItens(List<Item> itens) {
-        this.itens = itens;
-    }
-
+    
     @Override
     public String toString() {
         return "Viagem [destino=" + destino + ", agencia=" + agencia + ", Ida=" + Ida + ", Volta=" + Volta + ", itens="
                 + itens + "]";
     }
-    
 }
 
 
