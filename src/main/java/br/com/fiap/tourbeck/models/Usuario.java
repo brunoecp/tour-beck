@@ -1,4 +1,4 @@
-package br.com.fiap.tourbeck.Controller.models;
+package br.com.fiap.tourbeck.models;
 
 import java.util.Date;
 

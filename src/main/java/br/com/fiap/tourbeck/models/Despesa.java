@@ -1,4 +1,4 @@
-package br.com.fiap.tourbeck.Controller.models;
+package br.com.fiap.tourbeck.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
