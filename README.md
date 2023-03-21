@@ -163,5 +163,5 @@
 
 |código|descrição
 |-|-
-200 | A viagem foi modificada com sucesso
-204 | A viagem não existe
+204 | A viagem foi modificada com sucesso
+404 | A viagem não existe
