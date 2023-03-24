@@ -7,18 +7,18 @@ public class Viagem {
     
     private String destino;
     private String agencia;
-    private String Ida;
+    private String Id;
     private String Volta;
     private List<Item> itens;
 
     public Viagem() {
     }
-    
-    public Viagem(String destino, String agencia, String ida, String volta, List<Item> itens) {
+
+    public Viagem(String destino, String agencia, String id, String volta, List<Item> itens) {
         this.destino = destino;
         this.agencia = agencia;
-        this.Ida = ida;
-        this.Volta = volta;
+        Id = id;
+        Volta = volta;
         this.itens = itens;
     }
 
@@ -35,13 +35,12 @@ public class Viagem {
         this.agencia = agencia;
     }
 
-
-    public String getIda() {
-        return Ida;
+    public String getId() {
+        return Id;
     }
 
-    public void setIda(String ida) {
-        Ida = ida;
+    public void setId(String id) {
+        Id = id;
     }
 
     public String getVolta() {
@@ -55,7 +54,7 @@ public class Viagem {
     
     @Override
     public String toString() {
-        return "Viagem [destino=" + destino + ", agencia=" + agencia + ", Ida=" + Ida + ", Volta=" + Volta + ", itens="
+        return "Viagem [destino=" + destino + ", agencia=" + agencia + ", Ida=" + Id + ", Volta=" + Volta + ", itens="
                 + itens + "]";
     }
 
@@ -66,6 +65,10 @@ public class Viagem {
     public void setItens(List<Item> itens) {
         this.itens = itens;
     }
+
+
+
+
 }
 
 

@@ -14,6 +14,7 @@ public class Usuario {
         private String bairro;
         private String cidade; 
         private String uf;
+        
     
         public Usuario() {
         }
