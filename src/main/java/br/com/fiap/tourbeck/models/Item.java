@@ -2,10 +2,12 @@ package br.com.fiap.tourbeck.models;
 
 public class Item {
 
+    private Long id;
     private String nome;
     private Integer quantidade;
-    
-    public Item(String nome, Integer quantidade) {
+
+    public Item(Long id, String nome, Integer quantidade) {
+        this.id = id;
         this.nome = nome;
         this.quantidade = quantidade;
     }
@@ -28,9 +30,17 @@ public class Item {
         this.quantidade = quantidade;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Itens [nome=" + nome + ", quantidade=" + quantidade + "]";
     }
-    
+
 }

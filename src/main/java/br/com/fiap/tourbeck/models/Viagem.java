@@ -5,23 +5,30 @@ import java.util.List;
 
 public class Viagem {
     
+    private Long id;
     private String destino;
     private String agencia;
-    private String Id;
+    private String ida;
     private String Volta;
-    private List<Item> itens;
 
     public Viagem() {
     }
 
-    public Viagem(String destino, String agencia, String id, String volta, List<Item> itens) {
+    public Viagem(Long id, String destino, String agencia, String ida, String volta) {
+        this.id = id;
         this.destino = destino;
         this.agencia = agencia;
-        Id = id;
+        this.ida = ida;
         Volta = volta;
-        this.itens = itens;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getDestino() {
         return destino;
     }
@@ -35,12 +42,12 @@ public class Viagem {
         this.agencia = agencia;
     }
 
-    public String getId() {
-        return Id;
+    public String getIda() {
+        return ida;
     }
 
-    public void setId(String id) {
-        Id = id;
+    public void setIda(String ida) {
+        this.ida = ida;
     }
 
     public String getVolta() {
@@ -50,23 +57,12 @@ public class Viagem {
     public void setVolta(String volta) {
         Volta = volta;
     }
-    
-    
+
     @Override
     public String toString() {
-        return "Viagem [destino=" + destino + ", agencia=" + agencia + ", Ida=" + Id + ", Volta=" + Volta + ", itens="
-                + itens + "]";
+        return "Viagem [id=" + id + ", destino=" + destino + ", agencia=" + agencia + ", ida=" + ida + ", Volta="
+                + Volta + "]";
     }
-
-    public List<Item> getItens() {
-        return itens;
-    }
-
-    public void setItens(List<Item> itens) {
-        this.itens = itens;
-    }
-
-
 
 
 }

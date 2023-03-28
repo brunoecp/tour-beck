@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Usuario {
 
+        private Long id;
         private String nomeCompleto;
         private Date dataNascimento;
         private int contato;
@@ -18,9 +19,9 @@ public class Usuario {
     
         public Usuario() {
         }
-
-        public Usuario(String nomeCompleto, Date dataNascimento, int contato, String email, int cep, String endereco,
-                int numero, String bairro, String cidade, String uf) {
+        public Usuario(Long id, String nomeCompleto, Date dataNascimento, int contato, String email, int cep,
+                String endereco, int numero, String bairro, String cidade, String uf) {
+            this.id = id;
             this.nomeCompleto = nomeCompleto;
             this.dataNascimento = dataNascimento;
             this.contato = contato;
@@ -33,7 +34,7 @@ public class Usuario {
             this.uf = uf;
         }
 
-        //getters and setters
+       //getters and setters
         public String getNomeCompleto() {
             return nomeCompleto;
         }
@@ -93,6 +94,22 @@ public class Usuario {
         }
         public void setUf(String uf) {
             this.uf = uf;
+        }
+
+
+        public Long getId() {
+            return id;
+        }
+
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+        @Override
+        public String toString() {
+            return "Usuario [id=" + id + ", nomeCompleto=" + nomeCompleto + ", dataNascimento=" + dataNascimento
+                    + ", contato=" + contato + ", Email=" + Email + ", cep=" + cep + ", endereco=" + endereco
+                    + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade + ", uf=" + uf + "]";
         }
     
     }
