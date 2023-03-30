@@ -1,20 +1,31 @@
 package br.com.fiap.tourbeck.models;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "T_TBE_VIAGEM")
 public class Viagem {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String destino;
     private String agencia;
-    private String ida;
-    private String Volta;
+    private Date ida;
+    private Date Volta;
 
     public Viagem() {
     }
-
-    public Viagem(Long id, String destino, String agencia, String ida, String volta) {
+    
+    public Viagem(Long id, String destino, String agencia, Date ida, Date volta) {
         this.id = id;
         this.destino = destino;
         this.agencia = agencia;
@@ -42,19 +53,19 @@ public class Viagem {
         this.agencia = agencia;
     }
 
-    public String getIda() {
+    public Date getIda() {
         return ida;
     }
 
-    public void setIda(String ida) {
+    public void setIda(Date ida) {
         this.ida = ida;
     }
 
-    public String getVolta() {
+    public Date getVolta() {
         return Volta;
     }
 
-    public void setVolta(String volta) {
+    public void setVolta(Date volta) {
         Volta = volta;
     }
 
@@ -63,7 +74,6 @@ public class Viagem {
         return "Viagem [id=" + id + ", destino=" + destino + ", agencia=" + agencia + ", ida=" + ida + ", Volta="
                 + Volta + "]";
     }
-
 
 }
 

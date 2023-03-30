@@ -2,98 +2,35 @@ package br.com.fiap.tourbeck.models;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+
+@Entity
+@Table(name = "T_TBE_USUARIO")
 public class Usuario {
 
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)    
         private Long id;
         private String nomeCompleto;
-        private Date dataNascimento;
-        private int contato;
+        private String sexo;
         private String Email;
-        private int cep;
-        private String endereco;
-        private int numero;
-        private String bairro;
-        private String cidade; 
-        private String uf;
+        private String cidade;
         
     
         public Usuario() {
         }
-        public Usuario(Long id, String nomeCompleto, Date dataNascimento, int contato, String email, int cep,
-                String endereco, int numero, String bairro, String cidade, String uf) {
+
+        public Usuario(Long id, String nomeCompleto, String sexo, String email, String cidade) {
             this.id = id;
             this.nomeCompleto = nomeCompleto;
-            this.dataNascimento = dataNascimento;
-            this.contato = contato;
+            this.sexo = sexo;
             Email = email;
-            this.cep = cep;
-            this.endereco = endereco;
-            this.numero = numero;
-            this.bairro = bairro;
             this.cidade = cidade;
-            this.uf = uf;
-        }
-
-       //getters and setters
-        public String getNomeCompleto() {
-            return nomeCompleto;
-        }
-        public void setNomeCompleto(String nomeCompleto) {
-            this.nomeCompleto = nomeCompleto;
-        }
-        public Date getDataNascimento() {
-            return dataNascimento;
-        }
-        public void setDataNascimento(Date dataNascimento) {
-            this.dataNascimento = dataNascimento;
-        }
-        public int getContato() {
-            return contato;
-        }
-        public void setContato(int contato) {
-            this.contato = contato;
-        }
-        public String getEmail() {
-            return Email;
-        }
-        public void setEmail(String email) {
-            Email = email;
-        }
-        public int getCep() {
-            return cep;
-        }
-        public void setCep(int cep) {
-            this.cep = cep;
-        }
-        public String getEndereco() {
-            return endereco;
-        }
-        public void setEndereco(String endereco) {
-            this.endereco = endereco;
-        }
-        public int getNumero() {
-            return numero;
-        }
-        public void setNumero(int numero) {
-            this.numero = numero;
-        }
-        public String getBairro() {
-            return bairro;
-        }
-        public void setBairro(String bairro) {
-            this.bairro = bairro;
-        }
-        public String getCidade() {
-            return cidade;
-        }
-        public void setCidade(String cidade) {
-            this.cidade = cidade;
-        }
-        public String getUf() {
-            return uf;
-        }
-        public void setUf(String uf) {
-            this.uf = uf;
         }
 
 
@@ -105,11 +42,51 @@ public class Usuario {
         public void setId(Long id) {
             this.id = id;
         }
+
+
+        public String getNomeCompleto() {
+            return nomeCompleto;
+        }
+
+
+        public void setNomeCompleto(String nomeCompleto) {
+            this.nomeCompleto = nomeCompleto;
+        }
+
+
+        public String getSexo() {
+            return sexo;
+        }
+
+
+        public void setSexo(String sexo) {
+            this.sexo = sexo;
+        }
+
+
+        public String getEmail() {
+            return Email;
+        }
+
+
+        public void setEmail(String email) {
+            Email = email;
+        }
+
+
+        public String getCidade() {
+            return cidade;
+        }
+
+
+        public void setCidade(String cidade) {
+            this.cidade = cidade;
+        }
+
+
         @Override
         public String toString() {
-            return "Usuario [id=" + id + ", nomeCompleto=" + nomeCompleto + ", dataNascimento=" + dataNascimento
-                    + ", contato=" + contato + ", Email=" + Email + ", cep=" + cep + ", endereco=" + endereco
-                    + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade + ", uf=" + uf + "]";
+            return "Usuario [id=" + id + ", nomeCompleto=" + nomeCompleto + ", sexo=" + sexo + ", Email=" + Email
+                    + ", cidade=" + cidade + "]";
         }
-    
     }

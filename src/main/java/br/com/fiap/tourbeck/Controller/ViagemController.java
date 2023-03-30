@@ -1,12 +1,10 @@
 package br.com.fiap.tourbeck.Controller;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,29 +13,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.tourbeck.models.Viagem;
+import br.com.fiap.tourbeck.repository.ViagemRepository;
 
 @RestController
+@RequestMapping("/api/v1/viagem")
 public class ViagemController {
 
-    SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
-
+    @Autowired
+    ViagemRepository repository;
     Logger log = LoggerFactory.getLogger(ViagemController.class);
 
-    List<Viagem> viagens = new ArrayList<>();
-
     //GET ALL
-    @GetMapping("/api/v1/viagem")
+    @GetMapping
     public List<Viagem> Home(){
-        return viagens;
+        return repository.findAll();
     }
 
     //GET
-    @GetMapping("api/v1/viagem/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Viagem> show(@PathVariable Long id) {
-         var viagem = viagens.stream().filter(d -> d.getId().equals(id)).findFirst();
+         var viagem = repository.findById(id);
 
          if ( viagem.isEmpty()) return ResponseEntity.notFound().build();
          
@@ -45,44 +44,42 @@ public class ViagemController {
     }
 
     //POST 
-    @PostMapping("/api/v1/viagem")
+    @PostMapping
     public ResponseEntity<Viagem> create(@RequestBody Viagem viagem){
         log.info("inserindo viagem: " + viagem);
 
-        viagem.setId(viagens.size() + 1l);
-
-        viagens.add(viagem);
+        repository.save(viagem);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(viagem);
     }
 
     //DELETE
-    @DeleteMapping("/api/v1/viagem/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Viagem> delete(@PathVariable Long id) {
 
         log.info("Deletando viagem: " + id);
 
-        var viagem = viagens.stream().filter(d -> d.getId().equals(id)).findFirst();
+        var viagem = repository.findById(id);
 
          if ( viagem.isEmpty()) return ResponseEntity.notFound().build();
 
-         viagens.remove(viagem.get());
+         repository.delete(viagem.get());
 
          return ResponseEntity.noContent().build();
     }
     //PUT
-    @PutMapping("/api/v1/viagem/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Viagem> update(@PathVariable Long id, @RequestBody Viagem viagem) {
 
         log.info("Atualizando viagem: " + id);
 
-        var viagemEncontrada = viagens.stream().filter(d -> d.getId().equals(id)).findFirst();
+        var viagemEncontrada = repository.findById(id);
 
         if ( viagemEncontrada.isEmpty()) return ResponseEntity.notFound().build();
 
-        viagens.remove(viagemEncontrada.get());
         viagem.setId(id);
-        viagens.add(viagem);
+
+        repository.save(viagem);
 
         return ResponseEntity.ok(viagem);
     }
