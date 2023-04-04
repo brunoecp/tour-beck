@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fiap.tourbeck.Exception.RestNotFoundException;
 import br.com.fiap.tourbeck.models.Usuario;
 import br.com.fiap.tourbeck.repository.UsuarioRepository;
 
@@ -36,12 +37,9 @@ public class UsuarioController {
     }
     @GetMapping("{id}")
     public ResponseEntity<Usuario> show(@PathVariable Long id) {
-        var usuario = repository.findById(id);
-
-        if (usuario.isEmpty()) return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok(usuario.get());
+        return ResponseEntity.ok(getUsuario(id));
     }
+
     @PostMapping
     public ResponseEntity<Usuario> insert(@RequestBody Usuario usuario) {
         log.info("inserindo usuario: " + usuario);
@@ -52,23 +50,20 @@ public class UsuarioController {
     }
     @DeleteMapping("{id}")
     public ResponseEntity<Usuario> delete(@PathVariable Long id) {
-        var usuario = repository.findById(id);
-
-        if (usuario.isEmpty()) return ResponseEntity.notFound().build();
-
-        repository.delete(usuario.get());
+        repository.delete(getUsuario(id));
 
         return ResponseEntity.noContent().build();
     }
     @PutMapping("{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
-        var usuarioEncontrado = repository.findById(id);
-
-        if (usuarioEncontrado.isEmpty()) return ResponseEntity.notFound().build();
+        getUsuario(id);
 
         usuario.setId(id);
         repository.save(usuario);
 
         return ResponseEntity.ok(usuario);
+    }
+    private Usuario getUsuario(Long id) {
+        return repository.findById(id).orElseThrow(()-> new RestNotFoundException("Usuario não encontrado"));
     }
 }

@@ -1,11 +1,10 @@
 package br.com.fiap.tourbeck.Controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,8 +29,8 @@ public class ItemController {
     Logger log = LoggerFactory.getLogger(ItemController.class);
 
     @GetMapping
-    public List<Item> home() {
-        return repository.findAll();
+    public Page<Item> home(Pageable paginacao) {
+        return repository.findAll(paginacao);
     }
     @GetMapping("{id}")
     public ResponseEntity<Item> show(@PathVariable Long id) {

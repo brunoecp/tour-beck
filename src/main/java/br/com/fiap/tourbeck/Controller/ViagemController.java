@@ -1,10 +1,10 @@
 package br.com.fiap.tourbeck.Controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fiap.tourbeck.Exception.RestNotFoundException;
 import br.com.fiap.tourbeck.models.Viagem;
 import br.com.fiap.tourbeck.repository.ViagemRepository;
 
@@ -29,18 +30,14 @@ public class ViagemController {
 
     //GET ALL
     @GetMapping
-    public List<Viagem> Home(){
-        return repository.findAll();
+    public Page<Viagem> Home(Pageable paginacao){
+        return repository.findAll(paginacao);
     }
 
     //GET
     @GetMapping("{id}")
     public ResponseEntity<Viagem> show(@PathVariable Long id) {
-         var viagem = repository.findById(id);
-
-         if ( viagem.isEmpty()) return ResponseEntity.notFound().build();
-         
-         return ResponseEntity.ok(viagem.get());
+         return ResponseEntity.ok(getViagem(id));
     }
 
     //POST 
@@ -59,11 +56,7 @@ public class ViagemController {
 
         log.info("Deletando viagem: " + id);
 
-        var viagem = repository.findById(id);
-
-         if ( viagem.isEmpty()) return ResponseEntity.notFound().build();
-
-         repository.delete(viagem.get());
+         repository.delete(getViagem(id));
 
          return ResponseEntity.noContent().build();
     }
@@ -73,14 +66,16 @@ public class ViagemController {
 
         log.info("Atualizando viagem: " + id);
 
-        var viagemEncontrada = repository.findById(id);
-
-        if ( viagemEncontrada.isEmpty()) return ResponseEntity.notFound().build();
+        getViagem(id);
 
         viagem.setId(id);
 
         repository.save(viagem);
 
         return ResponseEntity.ok(viagem);
+    }
+    
+    private Viagem getViagem(Long id) {
+        return repository.findById(id).orElseThrow(() -> new RestNotFoundException("Viagem não encontrada"));
     }
 }

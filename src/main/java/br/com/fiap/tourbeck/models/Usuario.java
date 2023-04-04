@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 
 @Entity
@@ -16,9 +18,13 @@ public class Usuario {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)    
         private Long id;
+        @NotBlank 
         private String nomeCompleto;
+        @NotBlank
         private String sexo;
+        @NotBlank
         private String Email;
+        @NotBlank
         private String cidade;
         
     

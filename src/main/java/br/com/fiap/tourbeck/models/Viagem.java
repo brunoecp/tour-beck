@@ -9,6 +9,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "T_TBE_VIAGEM")
@@ -17,9 +20,13 @@ public class Viagem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String destino;
+    @NotBlank
     private String agencia;
+    @NotBlank @FutureOrPresent
     private Date ida;
+    @NotBlank @Future
     private Date Volta;
 
     public Viagem() {
