@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.tourbeck.Exception.RestNotFoundException;
 import br.com.fiap.tourbeck.models.Despesa;
+import br.com.fiap.tourbeck.repository.ContaExRepository;
 import br.com.fiap.tourbeck.repository.DespesaRepository;
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import jakarta.validation.Valid;
@@ -32,13 +33,15 @@ import jakarta.validation.Valid;
 public class ExController {
     
     @Autowired
-    DespesaRepository repository;
+    DespesaRepository despesaRepository;
+    @Autowired
+    ContaExRepository contaRepository;
     Logger log = LoggerFactory.getLogger(ExController.class);
 
     //GET ALL
     @GetMapping
     public Page<Despesa> Home(Pageable pag){
-        return repository.findAll(pag);
+        return despesaRepository.findAll(pag);
     }
     //GET
     @GetMapping("{id}")
@@ -49,7 +52,8 @@ public class ExController {
     @PostMapping
     public ResponseEntity<Despesa> create(@RequestBody @Valid Despesa despesa, BindingResult result){
         log.info("despesa cadastrada " + despesa);
-        repository.save(despesa);
+        despesaRepository.save(despesa);
+        despesa.setConta(contaRepository.findById(despesa.getConta().getId()).get());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(despesa);
     }
@@ -58,7 +62,7 @@ public class ExController {
     @DeleteMapping("{id}")
     public ResponseEntity<Despesa> delete(@PathVariable Long id) {
         log.info("apagando despesa: " + id);
-        repository.delete(getDespesa(id));
+         despesaRepository.delete(getDespesa(id));
         return ResponseEntity.noContent().build();
     }
 
@@ -69,11 +73,11 @@ public class ExController {
 
         despesa.setId(id);
         
-        repository.save(despesa);
+        despesaRepository.save(despesa);
         return ResponseEntity.ok(despesa);
     }
 
     private Despesa getDespesa(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RestNotFoundException("Despesa não encontrada"));
+        return despesaRepository.findById(id).orElseThrow(() -> new RestNotFoundException("Despesa não encontrada"));
     }
 }
