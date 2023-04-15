@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,21 +18,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.tourbeck.Exception.RestNotFoundException;
+import br.com.fiap.tourbeck.models.Usuario;
 import br.com.fiap.tourbeck.models.Viagem;
+import br.com.fiap.tourbeck.repository.UsuarioRepository;
 import br.com.fiap.tourbeck.repository.ViagemRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/viagem")
 public class ViagemController {
 
     @Autowired
-    ViagemRepository repository;
+    ViagemRepository viagemRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
     Logger log = LoggerFactory.getLogger(ViagemController.class);
 
     //GET ALL
     @GetMapping
     public Page<Viagem> Home(Pageable paginacao){
-        return repository.findAll(paginacao);
+        return viagemRepository.findAll(paginacao);
     }
 
     //GET
@@ -42,10 +48,12 @@ public class ViagemController {
 
     //POST 
     @PostMapping
-    public ResponseEntity<Viagem> create(@RequestBody Viagem viagem){
+    public ResponseEntity<Viagem> create(@RequestBody @Valid Viagem viagem, BindingResult result){
         log.info("inserindo viagem: " + viagem);
 
-        repository.save(viagem);
+        viagemRepository.save(viagem);
+
+        viagem.setUsuario(usuarioRepository.findById(viagem.getUsuario().getId()).get());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(viagem);
     }
@@ -56,7 +64,7 @@ public class ViagemController {
 
         log.info("Deletando viagem: " + id);
 
-         repository.delete(getViagem(id));
+         viagemRepository.delete(getViagem(id));
 
          return ResponseEntity.noContent().build();
     }
@@ -70,12 +78,12 @@ public class ViagemController {
 
         viagem.setId(id);
 
-        repository.save(viagem);
+        viagemRepository.save(viagem);
 
         return ResponseEntity.ok(viagem);
     }
     
     private Viagem getViagem(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RestNotFoundException("Viagem não encontrada"));
+        return viagemRepository.findById(id).orElseThrow(() -> new RestNotFoundException("Viagem não encontrada"));
     }
 }

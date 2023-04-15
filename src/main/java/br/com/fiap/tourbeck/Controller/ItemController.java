@@ -18,23 +18,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.tourbeck.models.Item;
 import br.com.fiap.tourbeck.repository.ItemRepository;
+import br.com.fiap.tourbeck.repository.UsuarioRepository;
+import br.com.fiap.tourbeck.repository.ViagemRepository;
 
 @RestController
 @RequestMapping("/api/v1/item")
 public class ItemController {
 
     @Autowired
-    ItemRepository repository;
+    ItemRepository iRepository;
+    @Autowired
+    ViagemRepository vRepository;
     
     Logger log = LoggerFactory.getLogger(ItemController.class);
 
     @GetMapping
     public Page<Item> home(Pageable paginacao) {
-        return repository.findAll(paginacao);
+        return iRepository.findAll(paginacao);
     }
     @GetMapping("{id}")
     public ResponseEntity<Item> show(@PathVariable Long id) {
-        var item = repository.findById(id);
+        var item = iRepository.findById(id);
 
         if(item.isEmpty()) return ResponseEntity.notFound().build();
 
@@ -44,28 +48,31 @@ public class ItemController {
     public ResponseEntity<Item> insert(@RequestBody Item item) {
         log.info("inserindo item: " + item);
 
-        repository.save(item);
+        item.setViagem(vRepository.findById(item.getViagem().getId()).get());
+
+
+        iRepository.save(item);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(item);
     }
     @DeleteMapping("{id}")
     public ResponseEntity<Item> delete(@PathVariable Long id) {
-        var item = repository.findById(id);
+        var item = iRepository.findById(id);
 
         if(item.isEmpty()) return ResponseEntity.notFound().build();
 
-        repository.delete(item.get());
+        iRepository.delete(item.get());
 
         return ResponseEntity.noContent().build();
     }
     @PutMapping("{id}")
     public ResponseEntity<Item> update(@PathVariable Long id, @RequestBody Item item) {
-        var itemEncotrado = repository.findById(id)
+        var itemEncotrado = iRepository.findById(id)
         ;
         if(itemEncotrado.isEmpty()) return ResponseEntity.notFound().build();
         
         item.setId(id);
-        repository.save(item);
+        iRepository.save(item);
 
         return ResponseEntity.ok(item);
     }

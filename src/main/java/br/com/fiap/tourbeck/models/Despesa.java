@@ -30,8 +30,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @ToString
 @EqualsAndHashCode
 public class Despesa {
