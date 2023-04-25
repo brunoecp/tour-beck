@@ -37,7 +37,7 @@ public class UsuarioController {
     @GetMapping
     public Page<Usuario> home(@RequestParam(required = false) String busca, Pageable pag) {
         if( busca == null) return repository.findAll(pag);
-        return repository.findByNameContaining(busca, pag);
+        return repository.findByNomeContaining(busca, pag);
     }
     @GetMapping("{id}")
     public ResponseEntity<Usuario> show(@PathVariable Long id) {

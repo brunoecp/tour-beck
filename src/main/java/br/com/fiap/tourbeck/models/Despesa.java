@@ -3,6 +3,12 @@ package br.com.fiap.tourbeck.models;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+
+import br.com.fiap.tourbeck.Controller.ContaExController;
+import br.com.fiap.tourbeck.Controller.ExController;
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +41,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Builder
-public class Despesa {
+public class Despesa{
 
     @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,5 +54,15 @@ public class Despesa {
     private String descricao;
     @ManyToOne
     private ContaEx conta;
+
+    public EntityModel<Despesa> toEntityModel() {
+        return EntityModel.of( 
+            this,
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ExController.class).show(id)).withSelfRel(),
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ExController.class).delete(id)).withRel("delete"),
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ExController.class).Home(null, Pageable.unpaged())).withRel("all"),
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ContaExController.class).show(this.getConta().getId())).withRel("conta")
+            );
+    }
     
 }

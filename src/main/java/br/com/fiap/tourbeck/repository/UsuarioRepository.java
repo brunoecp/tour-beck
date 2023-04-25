@@ -8,6 +8,6 @@ import br.com.fiap.tourbeck.models.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
-    Page<Usuario> findByNameContaining(String busca, Pageable pag);
+    Page<Usuario> findByNomeContaining(String busca, Pageable pag);
     
 }
