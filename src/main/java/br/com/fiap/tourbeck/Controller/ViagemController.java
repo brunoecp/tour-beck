@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.tourbeck.Exception.RestNotFoundException;
@@ -36,8 +37,9 @@ public class ViagemController {
 
     //GET ALL
     @GetMapping
-    public Page<Viagem> Home(Pageable paginacao){
-        return viagemRepository.findAll(paginacao);
+    public Page<Viagem> Home(Pageable page, @RequestParam(required = false) String busca){
+        if (busca == null) return viagemRepository.findAll(page);
+        return viagemRepository.findByAgenciaContaining(busca, page);
     }
 
     //GET

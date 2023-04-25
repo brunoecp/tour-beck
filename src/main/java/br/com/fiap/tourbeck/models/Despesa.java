@@ -19,6 +19,7 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,6 +34,7 @@ import lombok.ToString;
 @Getter @Setter
 @ToString
 @EqualsAndHashCode
+@Builder
 public class Despesa {
 
     @Id

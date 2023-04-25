@@ -29,7 +29,7 @@ public class ContaEx {
     private Long id;
 
     private String nome;
-    @JsonProperty(access = Access.WRITE_ONLY)
+    @JsonProperty(access = Access.WRITE_ONLY, value = "saldo inicial")
     private BigDecimal saldoInicial;
     private String icone;
     

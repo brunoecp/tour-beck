@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.tourbeck.Exception.RestNotFoundException;
@@ -40,8 +42,9 @@ public class ExController {
 
     //GET ALL
     @GetMapping
-    public Page<Despesa> Home(Pageable pag){
-        return despesaRepository.findAll(pag);
+    public Page<Despesa> Home(@RequestParam(required = false) String busca,@PageableDefault(size = 5, page = 0) Pageable pag){
+        if(busca == null) return despesaRepository.findAll(pag);
+        return despesaRepository.findByDescricaoContaining(busca, pag);
     }
     //GET
     @GetMapping("{id}")
