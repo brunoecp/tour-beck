@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -33,13 +36,18 @@ public class ViagemController {
     ViagemRepository viagemRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    PagedResourcesAssembler<Object> assembler;
     Logger log = LoggerFactory.getLogger(ViagemController.class);
 
     //GET ALL
     @GetMapping
-    public Page<Viagem> Home(Pageable page, @RequestParam(required = false) String busca){
-        if (busca == null) return viagemRepository.findAll(page);
-        return viagemRepository.findByAgenciaContaining(busca, page);
+    public PagedModel<EntityModel<Object>> Home(Pageable pag, @RequestParam(required = false) String busca){
+        Page<Viagem> viagens= (busca == null) ?
+            viagemRepository.findAll(pag): 
+            viagemRepository.findByAgenciaContaining(busca, pag);
+
+        return assembler.toModel(viagens.map(Viagem::toEntityModel));
     }
 
     //GET

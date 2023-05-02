@@ -3,7 +3,12 @@ package br.com.fiap.tourbeck.models;
 import java.util.Date;
 
 import org.hibernate.annotations.ManyToAny;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
+import br.com.fiap.tourbeck.Controller.UsuarioController;
+import br.com.fiap.tourbeck.Controller.ViagemController;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,6 +49,16 @@ public class Viagem {
     private Date volta;
     @ManyToOne
     private Usuario usuario;
+
+    public EntityModel<Viagem> toEntityModel() {
+        return EntityModel.of( 
+            this,
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ViagemController.class).show(id)).withSelfRel(),
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ViagemController.class).delete(id)).withRel("delete"),
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ViagemController.class).Home( Pageable.unpaged(),null)).withRel("all"),
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UsuarioController.class).show(this.getUsuario().getId())).withRel("Usuario")
+            );
+    }
 }
 
 
