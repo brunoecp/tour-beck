@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -31,13 +34,17 @@ public class UsuarioController {
 
     @Autowired
     UsuarioRepository repository;
+    @Autowired
+    PagedResourcesAssembler<Object> assembler;
 
     Logger log = LoggerFactory.getLogger(UsuarioController.class);
 
     @GetMapping
-    public Page<Usuario> home(@RequestParam(required = false) String busca, Pageable pag) {
-        if( busca == null) return repository.findAll(pag);
-        return repository.findByNomeContaining(busca, pag);
+    public PagedModel<EntityModel<Object>> home(@RequestParam(required = false) String busca, Pageable pag) {
+        Page<Usuario> usuarios= (busca == null) ?
+        repository.findAll(pag): 
+        repository.findByNomeContaining(busca, pag);
+        return assembler.toModel(usuarios.map(Usuario::toEntityModel));
     }
     @GetMapping("{id}")
     public ResponseEntity<Usuario> show(@PathVariable Long id) {
