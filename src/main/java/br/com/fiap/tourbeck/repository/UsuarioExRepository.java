@@ -8,6 +8,6 @@ import br.com.fiap.tourbeck.models.UsuarioEx;
 
 public interface UsuarioExRepository extends JpaRepository<UsuarioEx, Long>{
 
-    Optional findByEmail(String email);
+    Optional<UsuarioEx> findByEmail(String email);
     
 }
